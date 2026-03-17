@@ -47,9 +47,9 @@ module regfile_fv (
     a_write_read_back_x31: assert property(p_write_read_back(5'd31));
 
     property stabilty;
-        @(posedge clk)
         logic [31:0] write_address;
         logic [31:0] previous_data;
+        @(posedge clk)
         (we == 0, write_address = rd_addr)
         |-> (rs1_addr == write_address) |-> (previous_data = rs1_data)
         |=>
