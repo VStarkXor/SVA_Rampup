@@ -58,7 +58,7 @@ module regfile_fv (
         (rs1_addr == write_address) |-> (rs1_data == previous_data);
     endproperty
 
-    stability_noovverite: assert property(stabilty);
+    stability_noOvverite: assert property(stabilty);
 
     // ---------------------------------------------------------
     // 3. COVERAGE: Proving the property is reachable
