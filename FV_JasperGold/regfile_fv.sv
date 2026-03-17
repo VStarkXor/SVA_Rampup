@@ -45,7 +45,12 @@ module regfile_fv (
     // We can use a generate block or specific instances for critical registers
     a_write_read_back_x1: assert property(p_write_read_back(5'd1));
     a_write_read_back_x31: assert property(p_write_read_back(5'd31));
+    
+    // Property: Stability
+    // Description: If 'we' is low OR we are writing to a different register,
+    // the current value of a register must remain unchanged in the next cycle.
 
+    // this propewrty is written by me
     property stabilty;
         logic [31:0] write_address;
         logic [31:0] previous_data;
@@ -58,7 +63,19 @@ module regfile_fv (
         (rs1_addr == write_address) |-> (rs1_data == previous_data);
     endproperty
 
-    stability_noOvverite: assert property(stabilty);
+    stability_NoOvverite: assert property(stabilty);
+
+
+    // this property is written my LLM (Gemini 3)
+    property p_reg_stability(addr);
+        logic [31:0] current_val;
+        @(posedge clk)
+        ( (rs1_addr == addr), current_val = rs1_data ) // Capture current value
+        ##1 ( !(we && rd_addr == addr) )                // If no write to this addr
+        |-> ( (rs1_addr == addr) && (rs1_data == current_val) ); // Value must be same
+    endproperty
+
+    stability_NoOverrite_x1_Gemini: assert property(p_reg_stability(5'd1));
 
     // ---------------------------------------------------------
     // 3. COVERAGE: Proving the property is reachable
