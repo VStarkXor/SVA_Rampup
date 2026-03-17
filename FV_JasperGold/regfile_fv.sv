@@ -59,8 +59,8 @@ module regfile_fv (
         // |-> (rs1_addr == write_address) |-> (previous_data = rs1_data) //
         // only assinngment in |-> is not allowed
         |-> (rs1_addr == write_address, previous_data = rs1_data)
-        |=>
-        (rs1_addr == write_address) |-> (rs1_data == previous_data);
+        |=> (rs1_addr == write_address)
+        |-> (rs1_data == previous_data);
     endproperty
 
     stability_NoOvverite: assert property(stabilty);
