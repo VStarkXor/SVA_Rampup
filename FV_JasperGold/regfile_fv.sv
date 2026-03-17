@@ -48,6 +48,8 @@ module regfile_fv (
 
     property stabilty;
         @(posedge clk)
+        logic [31:0] write_address;
+        logic [31:0] previous_data;
         (we == 0, write_address = rd_addr)
         |-> (rs1_addr == write_address) |-> (previous_data = rs1_data)
         |=>
