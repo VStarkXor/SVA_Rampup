@@ -14,7 +14,6 @@ elaborate -top pc_unit
 
 # 5. Setup Clock and Reset
 clock clk
-reset -expression {!rst_n}
 
 # 6. Start the proof engines
 prove -all
